@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useState } from "react";
 
 const Login = () => {
@@ -15,17 +16,18 @@ const Login = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      fetch("https://jsonplaceholder.typicode.com/users/1")
-        .then((response) => response.json())
-        .then((data) => setUser(data));
+      const { data } = await axios.get(
+        "https://jsonplaceholder.typicode.com/users/1"
+      );
+      setUser(data);
     } catch {
       setError(true);
     }
-    setLoading(false);
+    setLoading(false)
   };
 
   return (
-    <div className="container">
+    <div className="container" data-testid="Login">
       <span className="user">{user.name}</span>
       <form>
         <input
